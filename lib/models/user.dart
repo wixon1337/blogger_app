@@ -12,6 +12,8 @@ class User extends ChangeNotifier{
   String password;
   Role role;
 
+  bool get hasAdminRight => role == Role.admin;
+
   Map<String, dynamic> toJson() => {
         'username': username,
         'password': password,

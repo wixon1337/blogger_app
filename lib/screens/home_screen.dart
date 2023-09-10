@@ -1,5 +1,7 @@
 import 'package:blogger_app/components/blog_card.dart';
+import 'package:blogger_app/components/dialogs.dart';
 import 'package:blogger_app/components/my_drawer.dart';
+import 'package:blogger_app/models/blog.dart';
 import 'package:blogger_app/models/user.dart';
 import 'package:blogger_app/screens/blog_create_screen.dart';
 import 'package:blogger_app/utils/storage.dart';
@@ -36,7 +38,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemCount: blogs.length,
                 itemBuilder: (context, index) => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-                  child: BlogCard(blog: blogs[index]),
+                  child: BlogCard(
+                    blog: blogs[index],
+                    delete: () => _deleteBlog(blogs[index]),
+                    edit: () => _editBlog(blogs[index]),
+                  ),
                 ),
               );
             } else {
@@ -64,4 +70,46 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  Future<void> _deleteBlog(Blog blog) async {
+    var result = await Dialogs.openAlertDialog(
+      context: context,
+      title: 'warning'.tr(),
+      message: 'delete_desc'.tr(),
+      actions: [
+        Container(
+          width: 100.0,
+          height: 70.0,
+          padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 16.0),
+          child: ElevatedButton(
+            child: Text(
+              'no'.tr(),
+            ),
+            onPressed: () {
+              Navigator.pop(context, false);
+            },
+          ),
+        ),
+        Container(
+          width: 100.0,
+          height: 70.0,
+          padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 16.0),
+          child: ElevatedButton(
+            child: Text(
+              'yes'.tr(),
+            ),
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+          ),
+        ),
+      ],
+    );
+    if (result) {
+      await Storage.deleteBlog(blog);
+      setState(() {});
+    }
+  }
+
+  Future<void> _editBlog(Blog blog) async {}
 }

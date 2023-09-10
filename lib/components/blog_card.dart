@@ -1,13 +1,24 @@
 import 'package:blogger_app/models/blog.dart';
+import 'package:blogger_app/models/user.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BlogCard extends StatelessWidget {
-  const BlogCard({super.key, required this.blog});
+  const BlogCard({
+    super.key,
+    required this.blog,
+    required this.delete,
+    required this.edit,
+  });
 
   final Blog blog;
+  final void Function() delete;
+  final void Function() edit;
 
   @override
   Widget build(BuildContext context) {
+    var user = Provider.of<User>(context, listen: false);
+
     return Card(
       elevation: 2.0,
       shape: RoundedRectangleBorder(
@@ -44,14 +55,16 @@ class BlogCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.edit, color: Theme.of(context).colorScheme.primary),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.primary),
-                  ),
+                  if (user.hasAdminRight || blog.owner == user.username)
+                    IconButton(
+                      onPressed: edit,
+                      icon: Icon(Icons.edit, color: Theme.of(context).colorScheme.primary),
+                    ),
+                  if (user.hasAdminRight)
+                    IconButton(
+                      onPressed: delete,
+                      icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.primary),
+                    ),
                 ],
               ),
             ],

@@ -13,5 +13,9 @@
   "content": "Tartalom",
   "title_hint_text": "Itt tudja megadni a blog címét...",
   "content_hint_text": "Itt tudja megírni a blog tartalmát...",
-  "title_and_content_are_required": "Cím és tartalom mező megadása kötelező!"
+  "title_and_content_are_required": "Cím és tartalom mező megadása kötelező!",
+  "warning": "Figyelem!",
+  "delete_desc": "Biztosan törölni szeretné az adott blogot?",
+  "yes": "Igen",
+  "no": "Nem"
 }

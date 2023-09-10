@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:blogger_app/models/blog.dart';
 import 'package:blogger_app/models/user.dart';
+import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Storage {
@@ -17,7 +19,7 @@ class Storage {
     users ??= [];
     var encodedUser = jsonEncode(user.toJson());
     users.add(encodedUser);
-    prefs.setStringList('users', users);
+    await prefs.setStringList('users', users);
   }
 
   static Future<List<Blog>> getBlogs() async {
@@ -33,6 +35,18 @@ class Storage {
     blogs ??= [];
     var encodedBlog = jsonEncode(blog.toJson());
     blogs.add(encodedBlog);
-    prefs.setStringList('blogs', blogs);
+    await prefs.setStringList('blogs', blogs);
+  }
+
+  static Future<void> deleteBlog(Blog blog) async {
+    var prefs = await SharedPreferences.getInstance();
+    var blogs = await getBlogs();
+    var foundBlog = blogs.firstWhereOrNull((e) => e.title == blog.title && e.content.join() == blog.content.join());
+    if (foundBlog != null) {
+      blogs.remove(foundBlog);
+      await prefs.setStringList('blogs', blogs.map((e) => jsonEncode(e.toJson())).toList());
+    } else {
+      debugPrint('Blog delete failed. Blog not found');
+    }
   }
 }

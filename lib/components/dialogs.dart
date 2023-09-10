@@ -7,6 +7,7 @@ class Dialogs {
   static Future<bool> openAlertDialog({
     required BuildContext context,
     required String message,
+    List<Widget>? actions,
     String? title,
     double height = 200.0,
   }) async {
@@ -60,7 +61,7 @@ class Dialogs {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: actions ?? [
                       Container(
                         width: 150.0,
                         height: 70.0,
