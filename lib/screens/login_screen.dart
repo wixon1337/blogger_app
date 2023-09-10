@@ -1,3 +1,7 @@
+import 'package:blogger_app/components/dialogs.dart';
+import 'package:blogger_app/screens/home_screen.dart';
+import 'package:blogger_app/utils/storage.dart';
+import 'package:collection/collection.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -108,6 +112,19 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _login() async {
-    // TODO
+    var navigatorState = Navigator.of(context);
+    var users = await Storage.getUsers();
+    var foundUser = users.firstWhereOrNull((element) => element.username == _usernameInputController.text);
+    if (foundUser != null && foundUser.password == _passwordInputController.text) {
+      navigatorState.pushReplacementNamed(HomeScreen.routeName);
+    } else {
+      if (mounted) {
+        Dialogs.openAlertDialog(
+          context: context,
+          message: 'wrong_credentials'.tr(),
+          title: '${'error'.tr()}!',
+        );
+      }
+    }
   }
 }

@@ -2,5 +2,8 @@
   "login": "Bejelentkezés",
   "username": "Felhasználónév",
   "password": "Jelszó",
-  "enter": "Belépés"
+  "enter": "Belépés",
+  "wrong_credentials": "Rossz felhasználónév vagy jelszó!",
+  "ok": "Rendben",
+  "error": "Hiba"
 }
