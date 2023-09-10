@@ -1,3 +1,7 @@
+import 'package:blogger_app/components/dialogs.dart';
+import 'package:blogger_app/screens/home_screen.dart';
+import 'package:blogger_app/utils/storage.dart';
+import 'package:collection/collection.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _usernameInputController = TextEditingController();
   final TextEditingController _passwordInputController = TextEditingController();
+  bool _isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +78,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(6.0),
                       child: TextFormField(
                         controller: _passwordInputController,
-                        obscureText: true,
+                        obscureText: !_isPasswordVisible,
+                        decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible;
+                            });
+                          },
+                          icon: Icon(
+                            _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                            size: 20.0,
+                            color: Colors.black38,
+                          ),
+                          highlightColor: Theme.of(context).highlightColor,
+                        )),
                         textInputAction: TextInputAction.done,
                         onEditingComplete: _login,
                       ),
@@ -93,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: _login,
                         child: Text(
                           'enter'.tr(),
-                          style: TextStyle(fontSize: Theme.of(context).textTheme.headlineSmall!.fontSize),
+                          style: TextStyle(fontSize: Theme.of(context).textTheme.titleLarge!.fontSize),
                         ),
                       ),
                     ),
@@ -108,6 +127,19 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _login() async {
-    // TODO
+    var navigatorState = Navigator.of(context);
+    var users = await Storage.getUsers();
+    var foundUser = users.firstWhereOrNull((element) => element.username == _usernameInputController.text);
+    if (foundUser != null && foundUser.password == _passwordInputController.text) {
+      navigatorState.pushReplacementNamed(HomeScreen.routeName, arguments: foundUser);
+    } else {
+      if (mounted) {
+        Dialogs.openAlertDialog(
+          context: context,
+          message: 'wrong_credentials'.tr(),
+          title: '${'error'.tr()}!',
+        );
+      }
+    }
   }
 }
