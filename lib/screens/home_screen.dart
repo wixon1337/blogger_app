@@ -1,5 +1,6 @@
 import 'package:blogger_app/components/my_drawer.dart';
 import 'package:blogger_app/models/user.dart';
+import 'package:blogger_app/utils/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,9 +23,21 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context, child) => Scaffold(
         appBar: AppBar(title: Text('Blogs'), backgroundColor: Theme.of(context).colorScheme.primary),
         endDrawer: const MyDrawer(),
-        body: Container(
-          child: Text('home'),
+        body: FutureBuilder(
+          future: Storage.getBlogs(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              var blogs = snapshot.data!;
+              return ListView.builder(
+                itemCount: blogs.length,
+                itemBuilder: (context, index) => Text(blogs[index].title),
+              );
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
         ),
+        floatingActionButton: FloatingActionButton(onPressed: () {}, child: const Icon(Icons.create)),
       ),
     );
   }

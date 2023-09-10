@@ -1,3 +1,4 @@
+import 'package:blogger_app/models/blog.dart';
 import 'package:blogger_app/models/role.dart';
 import 'package:blogger_app/models/user.dart';
 import 'package:blogger_app/screens/home_screen.dart';
@@ -76,6 +77,24 @@ Future<void> _initData() async {
     ]);
     for (var user in users) {
       await Storage.saveUser(user);
+    }
+  }
+
+  var blogs = await Storage.getBlogs();
+  if (blogs.isEmpty) {
+    blogs.addAll([
+      Blog(
+        title: 'GPU Prices Are Dropping: GPUs Are Now Affordable In 2023',
+        content: [
+          'Finally, the good news is on the way this year for gamers looking to upgrade their GPU. After a few years of crazy graphics card prices, GPU pricing has finally dropped this year and is expected to sell at the market\'s normal retail price. If you want to upgrade your PC or buy a good GPU for your new PC, this year may be the best time to do so. However, there are several important concerns that you must be aware of in order to purchase a GPU at the right time for the best buy.',
+          'So, what are the reasons behind the decline in GPU pricing, and what is the current state of the graphics card market? Here\'s all you need to know about GPU pricing dropping in 2023:',
+        ],
+        createdBy: 'tesztferenc',
+        owner: 'tesztferenc',
+      ),
+    ]);
+    for (var blog in blogs) {
+      await Storage.saveBlog(blog);
     }
   }
 }
