@@ -7,16 +7,16 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class BlogCreateScreen extends StatefulWidget {
-  const BlogCreateScreen({super.key});
+class BlogScreen extends StatefulWidget {
+  const BlogScreen({super.key});
 
-  static const String routeName = '/blog-create';
+  static const String routeName = '/blog';
 
   @override
-  State<BlogCreateScreen> createState() => _BlogCreateScreenState();
+  State<BlogScreen> createState() => _BlogScreenState();
 }
 
-class _BlogCreateScreenState extends State<BlogCreateScreen> {
+class _BlogScreenState extends State<BlogScreen> {
   final TextEditingController _titleInputController = TextEditingController();
   final TextEditingController _contentInputController = TextEditingController();
 

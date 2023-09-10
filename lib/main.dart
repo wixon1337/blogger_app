@@ -1,7 +1,7 @@
 import 'package:blogger_app/models/blog.dart';
 import 'package:blogger_app/models/role.dart';
 import 'package:blogger_app/models/user.dart';
-import 'package:blogger_app/screens/blog_create_screen.dart';
+import 'package:blogger_app/screens/blog_screen.dart';
 import 'package:blogger_app/screens/home_screen.dart';
 import 'package:blogger_app/screens/login_screen.dart';
 import 'package:blogger_app/utils/storage.dart';
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
       routes: {
         LoginScreen.routeName: (context) => const LoginScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
-        BlogCreateScreen.routeName:(context) => const BlogCreateScreen(),
+        BlogScreen.routeName:(context) => const BlogScreen(),
       },
     );
   }

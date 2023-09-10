@@ -3,7 +3,7 @@ import 'package:blogger_app/components/dialogs.dart';
 import 'package:blogger_app/components/my_drawer.dart';
 import 'package:blogger_app/models/blog.dart';
 import 'package:blogger_app/models/user.dart';
-import 'package:blogger_app/screens/blog_create_screen.dart';
+import 'package:blogger_app/screens/blog_screen.dart';
 import 'package:blogger_app/utils/storage.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
               MaterialPageRoute(
                 builder: (context) => ChangeNotifierProvider<User>.value(
                   value: user,
-                  builder: (context, child) => const BlogCreateScreen(),
+                  builder: (context, child) => const BlogScreen(),
                 ),
               ),
             );
