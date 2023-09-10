@@ -18,5 +18,6 @@
   "warning": "Figyelem!",
   "delete_desc": "Biztosan törölni szeretné az adott blogot?",
   "yes": "Igen",
-  "no": "Nem"
+  "no": "Nem",
+  "owner": "Tulajdonos"
 }
