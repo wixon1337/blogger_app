@@ -23,7 +23,6 @@ class Storage {
   }
 
   static Future<List<Blog>> getBlogs() async {
-    await Future.delayed(const Duration(seconds: 1));
     var prefs = await SharedPreferences.getInstance();
     var blogs = prefs.getStringList('blogs');
     return blogs?.map((e) => Blog.fromJson(jsonDecode(e))).toList() ?? [];

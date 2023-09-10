@@ -20,17 +20,20 @@ class BlogScreen extends StatefulWidget {
 class _BlogScreenState extends State<BlogScreen> {
   final TextEditingController _titleInputController = TextEditingController();
   final TextEditingController _contentInputController = TextEditingController();
+  String _owner = '';
+  List<String> usernames = [];
 
   @override
   void initState() {
     super.initState();
-    _titleInputController.text = widget.blog?.title ?? '';
-    _contentInputController.text = widget.blog?.content.join('\n') ?? '';
+
+    Future.delayed(Duration.zero, _init);
   }
 
   @override
   Widget build(BuildContext context) {
     var isEdit = widget.blog != null;
+    var user = Provider.of<User>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -38,15 +41,21 @@ class _BlogScreenState extends State<BlogScreen> {
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       endDrawer: const MyDrawer(),
-      body: ConstrainedBox(
-        constraints: BoxConstraints(minWidth: MediaQuery.of(context).size.width),
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child:
-                  Text('title'.tr(), style: TextStyle(fontSize: Theme.of(context).textTheme.headlineSmall!.fontSize)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'title'.tr(),
+                    style: TextStyle(fontSize: Theme.of(context).textTheme.headlineSmall!.fontSize),
+                  )
+                ],
+              ),
             ),
             TextField(
               controller: _titleInputController,
@@ -68,7 +77,8 @@ class _BlogScreenState extends State<BlogScreen> {
               child:
                   Text('content'.tr(), style: TextStyle(fontSize: Theme.of(context).textTheme.headlineSmall!.fontSize)),
             ),
-            Expanded(
+            SizedBox(
+              height: 300.0,
               child: TextField(
                 controller: _contentInputController,
                 maxLines: 12,
@@ -87,11 +97,68 @@ class _BlogScreenState extends State<BlogScreen> {
                 ),
               ),
             ),
+            if (user.hasAdminRight && isEdit && usernames.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only( right: 12.0),
+                      child: Text(
+                        '${'owner'.tr()}:',
+                        style: TextStyle(fontSize: Theme.of(context).textTheme.headlineSmall!.fontSize),
+                      ),
+                    ),
+                    DropdownButton<String>(
+                      value: _owner,
+                      borderRadius: BorderRadius.circular(6.0),
+                      underline: Container(),
+                      focusColor: Colors.green.withOpacity(0.1),
+                      onChanged: (String? value) {
+                        setState(() {
+                          _owner = value!;
+                        });
+                      },
+                      selectedItemBuilder: (context) => usernames
+                          .map((e) => Center(
+                                  child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Text(e),
+                              )))
+                          .toList(),
+                      items: usernames.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(value),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
+              ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(onPressed: _save, child: const Icon(Icons.save)),
     );
+  }
+
+  Future<void> _init() async {
+    _titleInputController.text = widget.blog?.title ?? '';
+    _contentInputController.text = widget.blog?.content.join('\n') ?? '';
+
+    var user = Provider.of<User>(context, listen: false);
+    if (user.hasAdminRight) {
+      var users = await Storage.getUsers();
+      setState(() {
+        usernames = users.map((e) => e.username).toList();
+        _owner = widget.blog?.owner ?? '';
+      });
+    }
   }
 
   Future<void> _save() async {
@@ -113,7 +180,7 @@ class _BlogScreenState extends State<BlogScreen> {
           );
           blog.title = title;
           blog.content = content;
-          // TODO
+          blog.owner = _owner;
           await Storage.updateBlog(newBlog: blog, oldBlog: widget.blog!);
         }
       } else {
