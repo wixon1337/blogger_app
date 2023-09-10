@@ -32,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
             if (snapshot.hasData) {
               var blogs = snapshot.data!;
               return ListView.builder(
+                padding: const EdgeInsets.only(bottom: 80.0),
                 itemCount: blogs.length,
                 itemBuilder: (context, index) => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
@@ -58,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
               setState(() {});
             }
           },
-          child: const Icon(Icons.create),
+          child: const Icon(Icons.add),
         ),
       ),
     );

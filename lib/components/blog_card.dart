@@ -20,6 +20,8 @@ class BlogCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 blog.title,
@@ -27,7 +29,31 @@ class BlogCard extends StatelessWidget {
                     TextStyle(fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-              const Image(image: AssetImage('assets/images/speech-balloon-green.png'), height: 120.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Flexible(
+                    child: Text(
+                      blog.content.join('\n'),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 8,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.edit, color: Theme.of(context).colorScheme.primary),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.primary),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
