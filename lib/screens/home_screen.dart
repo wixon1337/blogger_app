@@ -1,3 +1,4 @@
+import 'package:blogger_app/components/blog_card.dart';
 import 'package:blogger_app/components/my_drawer.dart';
 import 'package:blogger_app/models/user.dart';
 import 'package:blogger_app/utils/storage.dart';
@@ -30,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
               var blogs = snapshot.data!;
               return ListView.builder(
                 itemCount: blogs.length,
-                itemBuilder: (context, index) => Text(blogs[index].title),
+                itemBuilder: (context, index) => BlogCard(blog: blogs[index]),
               );
             } else {
               return const Center(child: CircularProgressIndicator());
