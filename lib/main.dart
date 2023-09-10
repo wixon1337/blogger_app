@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
       routes: {
         LoginScreen.routeName: (context) => const LoginScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
-        BlogScreen.routeName:(context) => const BlogScreen(),
+        BlogScreen.routeName: (context) => const BlogScreen(),
       },
     );
   }
@@ -94,6 +94,33 @@ Future<void> _initData() async {
         ],
         createdBy: 'tesztferenc',
         owner: 'tesztferenc',
+      ),
+      Blog(
+        title: 'Top 5 BEST VR Headsets Under Rs. 5000 in India for 2023',
+        content: [
+          'The world is happily evolving toward the metaverse, and virtual reality is becoming increasingly popular. VR headsets are the best way to enjoy virtual or augmented reality. Using a VR headset, you can play games, watch 3D movies, and interact with other people.\nA VR headset that provides an outstanding experience is pricey, however, there are a few VR headsets on the market that provide a very nice experience for as little as Rs. 5000.\nHere’s the list of the top 5 best VR headsets under Rs. 5000 that provides an amazing experience.'
+        ],
+        createdBy: 'tesztádám',
+        owner: 'tesztádám',
+      ),
+      Blog(
+        title: 'How to choose a gaming mouse: A complete buying guide for gaming mouse',
+        content: [
+          'A good gaming mouse is the key to how well you play games, especially action games, but choosing a good gaming mouse is not an easy task for most people. Most PC gamers buy a gaming mouse either because of its looks or because they trust a specific brand, but a better gaming mouse depends on a number of factors that if you ignore while purchasing a gaming mouse, you may end up disliking your gaming skills or regretting your purchase.'
+        ],
+        createdBy: 'tesztbálint',
+        owner: 'tesztbálint',
+      ),
+      Blog(
+        title: 'Why PUBG: New State failed. What went wrong with PUBG: New State',
+        content: [
+          'Following a lot of hype, On November 11th, 2021, PUBG: New State was released worldwide. After its initial release, PUBG: New State drew a lot of attention. The game was thought to be a replica of the PC version of PUBG.',
+          'Poor optimization',
+          'Since optimization is so important for any game on any device, game developers spend a lot of time and effort to improve optimization so that games are compatible with as many devices as possible.',
+          'Developers in PUBG are professionals with best-in-class experience, and they put in a lot of effort to improve PUBG: New State\'s optimization. However, there have been numerous complaints that PUBG: New State is not well-optimized and has had multiple crashes and lags since its release. As a result of this, many games stopped attempting to play this game.',
+        ],
+        createdBy: 'tesztbálint',
+        owner: 'tesztbálint',
       ),
     ]);
     for (var blog in blogs) {
