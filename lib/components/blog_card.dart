@@ -1,5 +1,6 @@
 import 'package:blogger_app/models/blog.dart';
 import 'package:blogger_app/models/user.dart';
+import 'package:blogger_app/screens/blog_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,12 @@ class BlogCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(6.0),
       ),
       child: InkWell(
-        onTap: () => debugPrint('onTap'), // TODO
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BlogView(blog: blog),
+          ),
+        ),
         splashColor: Theme.of(context).colorScheme.primary.withOpacity(0.2),
         borderRadius: BorderRadius.circular(6.0),
         child: Padding(

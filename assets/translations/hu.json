@@ -9,6 +9,7 @@
   "logout": "Kijelentkezés",
   "blog_list": "Blog lista",
   "blog_create": "Blog létrehozás",
+  "blog_edit": "Blog módosítás",
   "title": "Cím",
   "content": "Tartalom",
   "title_hint_text": "Itt tudja megadni a blog címét...",

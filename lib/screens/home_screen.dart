@@ -111,5 +111,19 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> _editBlog(Blog blog) async {}
+  Future<void> _editBlog(Blog blog) async {
+    var user = ModalRoute.of(context)!.settings.arguments as User;
+
+    var result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider<User>.value(
+          value: user,
+          builder: (context, child) => BlogScreen(blog: blog),
+        ),
+      ),
+    );
+    
+    if (result == true) setState(() {});
+  }
 }

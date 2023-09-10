@@ -38,6 +38,19 @@ class Storage {
     await prefs.setStringList('blogs', blogs);
   }
 
+  static Future<void> updateBlog({required Blog oldBlog, required Blog newBlog}) async {
+    var prefs = await SharedPreferences.getInstance();
+    var blogs = await getBlogs();
+    var foundBlog = blogs.firstWhereOrNull((e) => e.title == oldBlog.title && e.content.join() == oldBlog.content.join());
+    if (foundBlog != null) {
+      blogs.remove(foundBlog);
+      blogs.add(newBlog);
+      await prefs.setStringList('blogs', blogs.map((e) => jsonEncode(e.toJson())).toList());
+    } else {
+      debugPrint('Blog update failed. Blog not found');
+    }
+  }
+
   static Future<void> deleteBlog(Blog blog) async {
     var prefs = await SharedPreferences.getInstance();
     var blogs = await getBlogs();

@@ -8,9 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class BlogScreen extends StatefulWidget {
-  const BlogScreen({super.key});
+  const BlogScreen({super.key, this.blog});
 
   static const String routeName = '/blog';
+  final Blog? blog;
 
   @override
   State<BlogScreen> createState() => _BlogScreenState();
@@ -21,9 +22,21 @@ class _BlogScreenState extends State<BlogScreen> {
   final TextEditingController _contentInputController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    _titleInputController.text = widget.blog?.title ?? '';
+    _contentInputController.text = widget.blog?.content.join('\n') ?? '';
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var isEdit = widget.blog != null;
+
     return Scaffold(
-      appBar: AppBar(title: Text('blog_create'.tr()), backgroundColor: Theme.of(context).colorScheme.primary),
+      appBar: AppBar(
+        title: Text(isEdit ? 'blog_edit'.tr() : 'blog_create'.tr()),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+      ),
       endDrawer: const MyDrawer(),
       body: ConstrainedBox(
         constraints: BoxConstraints(minWidth: MediaQuery.of(context).size.width),
@@ -83,14 +96,30 @@ class _BlogScreenState extends State<BlogScreen> {
 
   Future<void> _save() async {
     var user = Provider.of<User>(context, listen: false);
+    var isEdit = widget.blog != null;
 
     if (_titleInputController.text.isEmpty || _contentInputController.text.isEmpty) {
       Dialogs.openAlertDialog(context: context, message: 'title_and_content_are_required'.tr());
     } else {
       var title = _titleInputController.text;
       var content = _contentInputController.text.split('\n');
-      var newBlog = Blog(title: title, content: content, createdBy: user.username, owner: user.username);
-      await Storage.saveBlog(newBlog);
+      if (isEdit) {
+        if (widget.blog != null) {
+          var blog = Blog(
+            content: widget.blog!.content,
+            createdBy: widget.blog!.createdBy,
+            owner: widget.blog!.owner,
+            title: widget.blog!.title,
+          );
+          blog.title = title;
+          blog.content = content;
+          // TODO
+          await Storage.updateBlog(newBlog: blog, oldBlog: widget.blog!);
+        }
+      } else {
+        var newBlog = Blog(title: title, content: content, createdBy: user.username, owner: user.username);
+        await Storage.saveBlog(newBlog);
+      }
       if (mounted) Navigator.pop(context, true);
     }
   }
