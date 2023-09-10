@@ -116,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
     var users = await Storage.getUsers();
     var foundUser = users.firstWhereOrNull((element) => element.username == _usernameInputController.text);
     if (foundUser != null && foundUser.password == _passwordInputController.text) {
-      navigatorState.pushReplacementNamed(HomeScreen.routeName);
+      navigatorState.pushReplacementNamed(HomeScreen.routeName, arguments: foundUser);
     } else {
       if (mounted) {
         Dialogs.openAlertDialog(

@@ -1,6 +1,7 @@
 import 'package:blogger_app/models/role.dart';
+import 'package:flutter/material.dart';
 
-class User {
+class User extends ChangeNotifier{
   User({
     required this.username,
     required this.password,

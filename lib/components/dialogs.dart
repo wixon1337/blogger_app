@@ -16,8 +16,9 @@ class Dialogs {
         builder: (BuildContext context) {
           return AlertDialog(
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6.0),
-                side: const BorderSide(color: Colors.transparent, width: 1.0)),
+              borderRadius: BorderRadius.circular(6.0),
+              side: const BorderSide(color: Colors.transparent, width: 1.0),
+            ),
             backgroundColor: Colors.white,
             contentPadding: const EdgeInsets.all(0.0),
             content: SizedBox(
@@ -40,7 +41,7 @@ class Dialogs {
                             child: Text(
                               title ?? '',
                               style: TextStyle(
-                                fontSize: Theme.of(context).textTheme.headline6!.fontSize,
+                                fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,
                               ),
                             ),
                           ),
