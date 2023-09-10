@@ -78,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(6.0),
                       child: TextFormField(
                         controller: _passwordInputController,
-                        obscureText: _isPasswordVisible,
+                        obscureText: !_isPasswordVisible,
                         decoration: InputDecoration(
                             suffixIcon: IconButton(
                           onPressed: () {
