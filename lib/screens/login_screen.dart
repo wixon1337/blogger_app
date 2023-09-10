@@ -112,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: _login,
                         child: Text(
                           'enter'.tr(),
-                          style: TextStyle(fontSize: Theme.of(context).textTheme.headlineSmall!.fontSize),
+                          style: TextStyle(fontSize: Theme.of(context).textTheme.titleLarge!.fontSize),
                         ),
                       ),
                     ),

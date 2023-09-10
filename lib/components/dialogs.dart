@@ -23,6 +23,7 @@ class Dialogs {
             contentPadding: const EdgeInsets.all(0.0),
             content: SizedBox(
               height: height,
+              width: MediaQuery.of(context).size.width > 300.0 ? 300.0 : MediaQuery.of(context).size.width,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -39,7 +40,7 @@ class Dialogs {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 20.0, bottom: 13.0),
                             child: Text(
-                              title ?? '',
+                              title ?? 'error'.tr(),
                               style: TextStyle(
                                 fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,
                               ),

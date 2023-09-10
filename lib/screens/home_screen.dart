@@ -1,7 +1,9 @@
 import 'package:blogger_app/components/blog_card.dart';
 import 'package:blogger_app/components/my_drawer.dart';
 import 'package:blogger_app/models/user.dart';
+import 'package:blogger_app/screens/blog_create_screen.dart';
 import 'package:blogger_app/utils/storage.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return ChangeNotifierProvider<User>.value(
       value: user,
       builder: (context, child) => Scaffold(
-        appBar: AppBar(title: Text('Blogs'), backgroundColor: Theme.of(context).colorScheme.primary),
+        appBar: AppBar(title: Text('blog_list'.tr()), backgroundColor: Theme.of(context).colorScheme.primary),
         endDrawer: const MyDrawer(),
         body: FutureBuilder(
           future: Storage.getBlogs(),
@@ -31,14 +33,33 @@ class _HomeScreenState extends State<HomeScreen> {
               var blogs = snapshot.data!;
               return ListView.builder(
                 itemCount: blogs.length,
-                itemBuilder: (context, index) => BlogCard(blog: blogs[index]),
+                itemBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                  child: BlogCard(blog: blogs[index]),
+                ),
               );
             } else {
               return const Center(child: CircularProgressIndicator());
             }
           },
         ),
-        floatingActionButton: FloatingActionButton(onPressed: () {}, child: const Icon(Icons.create)),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            var result = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChangeNotifierProvider<User>.value(
+                  value: user,
+                  builder: (context, child) => const BlogCreateScreen(),
+                ),
+              ),
+            );
+            if (result) {
+              setState(() {});
+            }
+          },
+          child: const Icon(Icons.create),
+        ),
       ),
     );
   }

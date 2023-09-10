@@ -6,5 +6,12 @@
   "wrong_credentials": "Rossz felhasználónév vagy jelszó!",
   "ok": "Rendben",
   "error": "Hiba",
-  "logout": "Kijelentkezés"
+  "logout": "Kijelentkezés",
+  "blog_list": "Blog lista",
+  "blog_create": "Blog létrehozás",
+  "title": "Cím",
+  "content": "Tartalom",
+  "title_hint_text": "Itt tudja megadni a blog címét...",
+  "content_hint_text": "Itt tudja megírni a blog tartalmát...",
+  "title_and_content_are_required": "Cím és tartalom mező megadása kötelező!"
 }

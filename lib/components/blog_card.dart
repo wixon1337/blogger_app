@@ -14,7 +14,7 @@ class BlogCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(6.0),
       ),
       child: InkWell(
-        onTap: () => debugPrint('onTap'),
+        onTap: () => debugPrint('onTap'), // TODO
         splashColor: Theme.of(context).colorScheme.primary.withOpacity(0.2),
         borderRadius: BorderRadius.circular(6.0),
         child: Padding(

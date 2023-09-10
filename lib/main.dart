@@ -1,6 +1,7 @@
 import 'package:blogger_app/models/blog.dart';
 import 'package:blogger_app/models/role.dart';
 import 'package:blogger_app/models/user.dart';
+import 'package:blogger_app/screens/blog_create_screen.dart';
 import 'package:blogger_app/screens/home_screen.dart';
 import 'package:blogger_app/screens/login_screen.dart';
 import 'package:blogger_app/utils/storage.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
             borderSide: const BorderSide(color: Color.fromARGB(255, 16, 151, 23), width: 1.5, style: BorderStyle.solid),
           ),
           constraints: const BoxConstraints(maxWidth: 300.0, maxHeight: 50.0),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
@@ -61,6 +63,7 @@ class MyApp extends StatelessWidget {
       routes: {
         LoginScreen.routeName: (context) => const LoginScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
+        BlogCreateScreen.routeName:(context) => const BlogCreateScreen(),
       },
     );
   }
